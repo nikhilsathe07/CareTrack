@@ -1,6 +1,6 @@
 // src/components/Dashboard.tsx
-import { useState } from 'react';
-import { Grid, Typography, TextField, IconButton } from '@mui/material';
+import { useState } from 'react'; // Added import for useState
+import { Typography, TextField, IconButton } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { fetchMedications } from '../services/api';
 import MedicationCard from './MedicationCard';
@@ -9,9 +9,13 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import '../index.css';
 
-const Dashboard: React.FC = () => {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [search, setSearch] = useState('');
+interface DashboardProps {
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ theme, toggleTheme }) => {
+  const [search, setSearch] = useState(''); // useState is now defined
   const { data: medications, isLoading } = useQuery<Medication[]>({
     queryKey: ['medications'],
     queryFn: fetchMedications,
@@ -20,8 +24,6 @@ const Dashboard: React.FC = () => {
   const filteredMedications = medications?.filter((med) =>
     med.name.toLowerCase().includes(search.toLowerCase())
   );
-
-  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
   if (isLoading) return <Typography className="loading-text">Loading...</Typography>;
 
@@ -44,17 +46,15 @@ const Dashboard: React.FC = () => {
           </IconButton>
         </div>
       </div>
-      <Grid container spacing={2} className="grid-container">
+      <div className="grid-container">
         {filteredMedications?.length ? (
           filteredMedications.map((med) => (
-            <Grid item xs={12} sm={6} md={4} key={med.id}>
-              <MedicationCard medication={med} />
-            </Grid>
+            <MedicationCard key={med.id} medication={med} />
           ))
         ) : (
           <Typography>No medications found.</Typography>
         )}
-      </Grid>
+      </div>
     </div>
   );
 };

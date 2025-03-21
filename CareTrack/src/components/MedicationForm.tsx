@@ -5,7 +5,6 @@ import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMedication } from '../services/api';
-// import { Medication } from '../types/medication';
 import { Medication } from '../types/medication';
 
 const MedicationForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
@@ -72,7 +71,7 @@ const MedicationForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
           value={form.expirationDate}
           onChange={(date) => setForm({ ...form, expirationDate: date || new Date() })}
         />
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
           Add Medication
         </Button>
       </Box>

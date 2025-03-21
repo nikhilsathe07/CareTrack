@@ -6,10 +6,20 @@
   font-family: 'Roboto', sans-serif;
 }
 
-body {
+/* Apply theme to the root div or body */
+body,
+.light {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background: #f5f6f5; /* Light neutral gray */
+  color: #333333;
+}
+
+.dark {
+  background: #1a1a2e; /* Dark navy */
+  color: #ffffff;
 }
 
 /* Auth Pages */
@@ -31,12 +41,19 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+.dark .auth-form {
+  background: #2a2a3e;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
 .auth-title {
   font-size: 2rem;
   font-weight: 500;
   color: #1a1a2e;
-  margin-bottom: 1.5rem;
-  text-align: center;
+}
+
+.dark .auth-title {
+  color: #ffffff;
 }
 
 .auth-button {
@@ -55,6 +72,10 @@ body {
   text-decoration: none;
 }
 
+.dark .auth-link {
+  color: #64b5f6;
+}
+
 .auth-link:hover {
   text-decoration: underline;
 }
@@ -62,7 +83,7 @@ body {
 /* Dashboard Container */
 .dashboard {
   padding: 2rem;
-  max-width: 1280px; /* Adjusted for better control */
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -76,10 +97,18 @@ body {
   border-bottom: 1px solid #e0e0e0;
 }
 
+.dark .dashboard-header {
+  border-bottom: 1px solid #444466;
+}
+
 .dashboard-title {
   font-size: 2rem;
   font-weight: 500;
   color: #1a1a2e;
+}
+
+.dark .dashboard-title {
+  color: #ffffff;
 }
 
 /* Search Bar */
@@ -90,11 +119,20 @@ body {
   transition: border-color 0.3s ease;
 }
 
+.dark .search-bar {
+  border: 1px solid #444466;
+  background: #2a2a3e;
+}
+
 .search-bar input {
   padding: 0.5rem;
   border: none;
   outline: none;
   color: #333333;
+}
+
+.dark .search-bar input {
+  color: #ffffff;
 }
 
 .search-bar:hover,
@@ -108,6 +146,10 @@ body {
   padding: 0.5rem;
 }
 
+.dark .theme-toggle {
+  color: #64b5f6;
+}
+
 .theme-toggle:hover {
   background: rgba(25, 118, 210, 0.1);
 }
@@ -115,8 +157,8 @@ body {
 /* Grid Layout */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 cards per row for large screens */
-  gap: 1rem; /* Increased gap for better spacing */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
 
 /* Medication Card */
@@ -129,8 +171,18 @@ body {
   transition: box-shadow 0.3s ease;
 }
 
+.dark .medication-card {
+  background: #2a2a3e;
+  border: 1px solid #444466;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
 .medication-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dark .medication-card:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 /* Card Header */
@@ -148,6 +200,10 @@ body {
   color: #1a1a2e;
 }
 
+.dark .medication-name {
+  color: #ffffff;
+}
+
 /* Status Badge */
 .status-badge {
   padding: 0.25rem 0.75rem;
@@ -162,9 +218,19 @@ body {
   color: #2e7d32;
 }
 
+.dark .status-badge.on-schedule {
+  background: #2e7d32;
+  color: #ffffff;
+}
+
 .status-badge.due-soon {
   background: #fff3e0;
   color: #f57c00;
+}
+
+.dark .status-badge.due-soon {
+  background: #f57c00;
+  color: #ffffff;
 }
 
 .status-badge.overdue {
@@ -172,11 +238,19 @@ body {
   color: #d32f2f;
 }
 
+.dark .status-badge.overdue {
+  background: #d32f2f;
+  color: #ffffff;
+}
+
 /* Medication Details */
 .medication-detail {
   font-size: 0.95rem;
   color: #555555;
-  margin-bottom: 0.75rem;
+}
+
+.dark .medication-detail {
+  color: #bbbbbb;
 }
 
 /* Progress Circle */
@@ -192,11 +266,19 @@ body {
   color: #1976d2;
 }
 
+.dark .progress-ring {
+  color: #64b5f6;
+}
+
 .progress-text {
   position: absolute;
   font-size: 0.9rem;
   font-weight: 500;
   color: #333333;
+}
+
+.dark .progress-text {
+  color: #ffffff;
 }
 
 /* Tooltip */
@@ -211,6 +293,7 @@ body {
   display: flex;
   gap: 0.75rem;
   margin-top: 1rem;
+  align-items: center;
 }
 
 .action-button {
@@ -237,6 +320,11 @@ body {
   color: #1976d2;
 }
 
+.dark .action-button--renewal {
+  border: 1px solid #64b5f6;
+  color: #64b5f6;
+}
+
 .action-button:hover {
   opacity: 0.9;
 }
@@ -246,11 +334,18 @@ body {
   color: #ffffff;
 }
 
+.dark .action-button--renewal:hover {
+  background: #64b5f6;
+}
+
 /* Loading State */
 .loading-text {
   font-size: 1.25rem;
   color: #1976d2;
-  text-align: center;
+}
+
+.dark .loading-text {
+  color: #64b5f6;
 }
 
 /* Page Container */
@@ -265,7 +360,10 @@ body {
   font-size: 2rem;
   font-weight: 500;
   color: #1a1a2e;
-  margin-bottom: 1.5rem;
+}
+
+.dark .page-title {
+  color: #ffffff;
 }
 
 /* Notification Banner */
@@ -276,18 +374,71 @@ body {
   border-bottom: 1px solid #b2ebf2;
 }
 
+.dark .notification-banner {
+  background: #263238;
+  border-bottom: 1px solid #444466;
+}
+
 /* Chart Container */
 .chart-container {
   background: #ffffff;
-  padding: 1.5rem;
-  border-radius: 8px;
+  padding: 1rem;
+  border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+.dark .chart-container {
+  background: #2a2a3e;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Table (for History page) */
+.MuiTable-root {
+  background: #ffffff;
+}
+
+.dark .MuiTable-root {
+  background: #2a2a3e;
+}
+
+.MuiTableCell-root {
+  color: #333333;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.dark .MuiTableCell-root {
+  color: #ffffff;
+  border-bottom: 1px solid #444466;
+  /* color: red; */
+}
+
+/* Text Fields (for AddMedication, Settings, etc.) */
+.MuiInputBase-root {
+  background: #ffffff;
+  color: #333333;
+}
+
+.dark .MuiInputBase-root {
+  background: #2a2a3e;
+  color: #ffffff;
+  /* color: red; */
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #d0d0d0;
+  
+}
+
+.dark .MuiOutlinedInput-notchedOutline {
+  border-color: #444466;
+  /* color: white; */
+  /* border-color: red; */
+}
+
 /* Responsive Design */
-@media (max-width: 1024px) { /* Tablet */
+@media (max-width: 1024px) {
   .grid-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+    grid-template-columns: repeat(2, 1fr);
   }
   .dashboard,
   .page-container {
@@ -302,9 +453,9 @@ body {
   }
 }
 
-@media (max-width: 768px) { /* Mobile */
+@media (max-width: 768px) {
   .grid-container {
-    grid-template-columns: 1fr; /* 1 card per row */
+    grid-template-columns: 1fr;
   }
   .dashboard,
   .page-container {
@@ -321,29 +472,117 @@ body {
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-.card-actions {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  align-items: center; /* Ensure vertical alignment */
-}
-
-/* Ensure table cell alignment */
-@media (max-width: 768px) {
   .MuiTableCell-root {
-    padding: 0.5rem; /* Adjust padding for mobile */
+    padding: 0.5rem;
   }
+}
+
+
+
+
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  background: #f5f6f5; /* Matches .light */
+  color: #333333;
+  border-top: 1px solid #e0e0e0;
+}
+
+.dark .footer {
+  background: #1a1a2e; /* Matches .dark */
+  color: #ffffff;
+  border-top: 1px solid #444466;
+}
+
+
+
+
+
+
+.chart-container {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  max-width: 100%; /* Ensure it respects inline size */
+}
+
+.dark .chart-container {
+  background: #2a2a3e;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+
+
+
+/* Text Fields (for MedicationForm, AddMedication, etc.) */
+.MuiInputBase-root {
+  background: #ffffff;
+  color: #333333;
+}
+
+.dark .MuiInputBase-root {
+  background: #2a2a3e; /* Dark background */
+  color: #ffffff; /* White text */
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #d0d0d0;
+}
+
+.dark .MuiOutlinedInput-notchedOutline {
+  border-color: #444466; /* Darker outline */
+}
+
+/* Labels */
+.MuiFormLabel-root {
+  color: #666666; /* Light mode default */
+}
+
+.dark .MuiFormLabel-root {
+  color: #ffffff; /* White labels in dark mode */
+}
+
+/* Focused and Hovered States */
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #1976d2;
+}
+
+.dark .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #64b5f6; /* Lighter blue for dark mode */
+}
+
+/* Input Text */
+.MuiInputBase-input {
+  color: #333333;
+}
+
+.dark .MuiInputBase-input {
+  color: #ffffff; /* Ensure input text is white */
+}
+
+/* DateTimePicker Specifics */
+.MuiPickersDay-root {
+  color: #333333;
+}
+
+.dark .MuiPickersDay-root {
+  color: #ffffff;
+  background: #2a2a3e;
+}
+
+.dark .MuiPickersDay-root.Mui-selected {
+  background: #64b5f6;
+  color: #ffffff;
+}
+
+/* Buttons */
+.MuiButton-contained {
+  background: #1976d2;
+  color: #ffffff;
+}
+
+.dark .MuiButton-contained {
+  background: #64b5f6; /* Lighter blue for dark mode */
 }

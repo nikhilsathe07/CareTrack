@@ -23,7 +23,7 @@ const History: React.FC = () => {
     deleteMutation.mutate(id);
   };
 
-  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isLoading) return <Typography className="loading-text">Loading...</Typography>;
 
   return (
     <Box className="page-container">

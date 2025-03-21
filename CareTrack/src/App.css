@@ -1,0 +1,19 @@
+/* Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns by default */
+  gap: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {  /* Tablet */
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  }
+}
+
+@media (max-width: 768px) {  /* Mobile */
+  .grid-container {
+    grid-template-columns: 1fr; /* 1 column */
+  }
+}

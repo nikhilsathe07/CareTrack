@@ -1,35 +1,21 @@
 // src/components/AdherenceChart.tsx
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMedications } from '../services/api';
 import '../index.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const AdherenceChart: React.FC = () => {
-  const { data: medications } = useQuery({
-    queryKey: ['medications'],
-    queryFn: fetchMedications,
-  });
+interface AdherenceChartProps {
+  size?: string; // e.g., "200px" for half of 400px
+}
 
-  const adherenceData = medications
-    ? medications.map((med) => Math.min(Math.max(med.refillsLeft * 20, 0), 100))
-    : [0];
-
+const AdherenceChart: React.FC<AdherenceChartProps> = ({ size = '400px' }) => {
   const data = {
-    labels: medications ? medications.map((med) => med.name) : ['No Data'],
+    labels: ['Taken', 'Missed'],
     datasets: [
       {
-        label: 'Adherence (%)',
-        data: adherenceData,
-        backgroundColor: [
-          '#1976d2',
-          '#2e7d32',
-          '#f57c00',
-          '#d32f2f',
-          '#7b1fa2',
-        ],
+        data: [75, 25],
+        backgroundColor: ['#1976d2', '#d32f2f'],
         borderWidth: 1,
       },
     ],
@@ -37,14 +23,11 @@ const AdherenceChart: React.FC = () => {
 
   const options = {
     responsive: true,
-    plugins: {
-      legend: { position: 'top' as const },
-      title: { display: true, text: 'Medication Adherence' },
-    },
+    maintainAspectRatio: true,
   };
 
   return (
-    <div className="chart-container">
+    <div className="chart-container" style={{ width: size, height: size }}>
       <Pie data={data} options={options} />
     </div>
   );

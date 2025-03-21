@@ -13,10 +13,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NotificationBanner from './components/NotificationBanner';
 import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import logo from './assets/logo.png'; // Adjust path to your logo file
 
 const queryClient = new QueryClient();
 
-// Protected Route Component
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
@@ -34,6 +34,9 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem('isAuthenticated') === 'true'
   );
+  const [theme, setTheme] = useState<'dark' | 'light'>(
+    (localStorage.getItem('theme') as 'dark' | 'light') || 'light' // Load from localStorage, default to 'light'
+  );
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -46,93 +49,135 @@ const App: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated');
     setIsAuthenticated(false);
-    window.location.href = '/login'; // Force redirect
+    window.location.href = '/login';
+  };
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const newTheme = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme); // Store in localStorage
+      return newTheme;
+    });
   };
 
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        {isAuthenticated && (
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                CareTrack
+        <div className={theme}>
+          {isAuthenticated && (
+            <AppBar
+              position="static"
+              sx={{
+                backgroundColor: theme === 'dark' ? '#1a1a2e' : '#ffffff',
+                color: theme === 'dark' ? '#ffffff' : '#333333',
+                boxShadow: theme === 'dark' ? '0 2px 8px rgba(255, 255, 255, 0.1)' : '0 2px 8px rgba(0, 0, 0, 0.05)',
+              }}
+            >
+              <Toolbar>
+                <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                  <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+                    <img
+                      src={logo}
+                      alt="CareTrack Logo"
+                      style={{
+                        height: '70px', // Matches h6 font-size (1.25rem = 20px)
+                        width: 'auto', // Maintains aspect ratio
+                      }}
+                    />
+                  </Link>
+                </Box>
+                <Button color="inherit" component={Link} to="/">
+                  Dashboard
+                </Button>
+                <Button color="inherit" component={Link} to="/history">
+                  History
+                </Button>
+                <Button color="inherit" component={Link} to="/add-medication">
+                  Add Medication
+                </Button>
+                <Button color="inherit" component={Link} to="/settings">
+                  Settings
+                </Button>
+                <Button color="inherit" component={Link} to="/profile">
+                  Profile
+                </Button>
+                <Button color="inherit" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </Toolbar>
+            </AppBar>
+          )}
+          <Box sx={{ mt: isAuthenticated ? 2 : 0, minHeight: 'calc(100vh - 64px - 60px)' }}>
+            {isAuthenticated && <NotificationBanner />}
+            <Routes>
+              <Route
+                path="/login"
+                element={<Login setIsAuthenticated={setIsAuthenticated} />}
+              />
+              <Route
+                path="/register"
+                element={<Register setIsAuthenticated={setIsAuthenticated} />}
+              />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard theme={theme} toggleTheme={toggleTheme} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/history"
+                element={
+                  <ProtectedRoute>
+                    <History />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/add-medication"
+                element={
+                  <ProtectedRoute>
+                    <AddMedication />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <Settings />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Box>
+          {isAuthenticated && (
+            <Box
+              className="footer"
+              sx={{
+                padding: '1rem',
+                textAlign: 'center',
+                backgroundColor: theme === 'dark' ? '#1a1a2e' : '#f5f6f5',
+                color: theme === 'dark' ? '#ffffff' : '#333333',
+                borderTop: theme === 'dark' ? '1px solid #444466' : '1px solid #e0e0e0',
+              }}
+            >
+              <Typography variant="body2">
+                © {new Date().getFullYear()} CareTrack. All rights reserved.
               </Typography>
-              <Button color="inherit" component={Link} to="/">
-                Dashboard
-              </Button>
-              <Button color="inherit" component={Link} to="/history">
-                History
-              </Button>
-              <Button color="inherit" component={Link} to="/add-medication">
-                Add Medication
-              </Button>
-              <Button color="inherit" component={Link} to="/settings">
-                Settings
-              </Button>
-              <Button color="inherit" component={Link} to="/profile">
-                Profile
-              </Button>
-              <Button color="inherit" onClick={handleLogout}>
-                Logout
-              </Button>
-            </Toolbar>
-          </AppBar>
-        )}
-        <Box sx={{ mt: isAuthenticated ? 2 : 0 }}>
-          {isAuthenticated && <NotificationBanner />}
-          <Routes>
-            <Route
-              path="/login"
-              element={<Login setIsAuthenticated={setIsAuthenticated} />}
-            />
-            <Route
-              path="/register"
-              element={<Register setIsAuthenticated={setIsAuthenticated} />}
-            />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/history"
-              element={
-                <ProtectedRoute>
-                  <History />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/add-medication"
-              element={
-                <ProtectedRoute>
-                  <AddMedication />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Box>
-        <ToastContainer />
+            </Box>
+          )}
+          <ToastContainer />
+        </div>
       </Router>
     </QueryClientProvider>
   );
