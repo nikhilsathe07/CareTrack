@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"  # Runs your existing build script
+  publish = "dist"           # Points Netlify to Vite's output folder
+
+[[headers]]
+  for = "/*.js"              # Ensures JS files have correct MIME type
+  [headers.values]
+    Content-Type = "text/javascript"
