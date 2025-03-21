@@ -1,5 +1,6 @@
 // src/App.tsx
 import { useState, useEffect } from 'react';
+// import logo from './assets/svg-logo.svg';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
@@ -17,7 +18,7 @@ import logo from './assets/logo.png'; // Adjust path to your logo file
 
 const queryClient = new QueryClient();
 
-const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
 
@@ -76,6 +77,7 @@ const App: React.FC = () => {
               <Toolbar>
                 <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
                   <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+                  
                     <img
                       src={logo}
                       alt="CareTrack Logo"

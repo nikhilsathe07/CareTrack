@@ -5,7 +5,7 @@ import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMedication } from '../services/api';
-import { Medication } from '../types/medication';
+
 
 const MedicationForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const queryClient = useQueryClient();
